@@ -56,6 +56,11 @@ class ViewController: UIViewController {
         keyButton.setTitle("Key", for: .normal)
         keyButton.addTarget(self, action: #selector(keyButtonTapped), for: .touchUpInside)
         
+        let squashButton = UIButton(type: .system)
+        squashButton.translatesAutoresizingMaskIntoConstraints = false
+        squashButton.setTitle("Squash", for: .normal)
+        squashButton.addTarget(self, action: #selector(squashButtonTapped), for: .touchUpInside)
+        
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
@@ -65,6 +70,8 @@ class ViewController: UIViewController {
         
         stackView.addArrangedSubview(rotateButton)
         stackView.addArrangedSubview(springButton)
+        stackView.addArrangedSubview(keyButton)
+        stackView.addArrangedSubview(squashButton)
         
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -91,7 +98,30 @@ class ViewController: UIViewController {
     }
     
     @objc private func keyButtonTapped() {
+        label.center = view.center
         
+        UIView.animateKeyframes(withDuration: 5.0, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.25) {
+                self.label.transform = CGAffineTransform(rotationAngle: .pi/4)
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.25) {
+                self.label.transform = .identity
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.25) {
+                self.label.transform = CGAffineTransform(translationX: 0, y: -50)
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.25) {
+                self.label.transform = .identity
+            }
+            
+            
+        }, completion: nil)
     }
     
+    @objc private func squashButtonTapped() {
+        
+    }
 }
