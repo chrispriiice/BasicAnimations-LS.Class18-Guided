@@ -77,6 +77,7 @@ class ViewController: UIViewController {
         stackView.addArrangedSubview(springButton)
         stackView.addArrangedSubview(keyButton)
         stackView.addArrangedSubview(squashButton)
+        stackView.addArrangedSubview(anticipationButton)
         
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -154,7 +155,26 @@ class ViewController: UIViewController {
         UIView.animateKeyframes(withDuration: 1.5, delay: 0, options: [], animations: animationBlock, completion: nil)
     }
     
-    @objc private func animationButtonTapped() {
+    @objc private func anticipationButtonTapped() {
+        label.center = view.center
         
+        let animBlock = {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1) {
+                self.label.transform = CGAffineTransform(rotationAngle: .pi/16.0)
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.2) {
+                self.label.transform = CGAffineTransform(rotationAngle: -.pi/16.0)
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.8) {
+                self.label.center = CGPoint(
+                    x: self.view.bounds.size.width + self.label.bounds.size.width,
+                    y: self.view.center.y
+                )
+            }
+        }
+        
+        UIView.animateKeyframes(withDuration: 1.5, delay: 0, options: [], animations: animBlock, completion: nil)
     }
 }
